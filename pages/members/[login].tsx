@@ -1,9 +1,4 @@
-import {
-  GetServerSideProps,
-  GetServerSidePropsContext,
-  GetStaticPaths,
-  GetStaticProps,
-} from "next";
+import { GetServerSidePropsContext } from "next";
 import { useRouter } from "next/router";
 
 interface MemberProps {
@@ -16,6 +11,8 @@ interface MemberProps {
 }
 
 // diego3g
+// Doc para realizar a autenticação
+// https://docs.github.com/rest/overview/resources-in-the-rest-api#rate-limiting
 export async function getStaticPaths() {
   const response = await fetch(`https://api.github.com/orgs/rocketseat/members`);
   const data = await response.json();
