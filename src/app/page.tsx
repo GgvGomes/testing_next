@@ -1,14 +1,30 @@
-import Image from 'next/image'
-import styles from './page.module.css'
+import { GetStaticProps } from "next";
 
-export default function Home() {
+import styles from "./page.module.css";
+
+export default function Home({ org }: any) {
   return (
     <main className={styles.main}>
-      <div className={styles.description}>
+      <div>
+        <h1>{org.login ? org.login : ""}</h1>
+        {/* <h3>{org.description}</h3>
 
-        <h1 className={styles.title}>Hello</h1>
-
+        <p>Site: <a href={org.blog}>{org.blog}</a></p> */}
       </div>
     </main>
-  )
+  );
 }
+
+// Testar no novo next
+export const getStaticProps: GetStaticProps = async () => {
+  const response = await fetch("https://api.github.com/orgs/rocketseat");
+  const data = await response.json();
+  console.log(data);
+
+  return {
+    props: {
+      org: data,
+    },
+    revalidate: 10,
+  };
+};
